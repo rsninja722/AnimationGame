@@ -51,6 +51,8 @@ public class Main extends GameJava {
 
 	static Level currentLevel;
 	
+	boolean showingTutorial = true;
+	
 	boolean introPlaying = true;
 	
 	Point cameraDirection;
@@ -171,6 +173,7 @@ public class Main extends GameJava {
 				// if the player is hitting any enemies
 				if (BaseEnemy.circleHittingEnemies(player.circle) != -1) {
 					Sounds.play("hit");
+					showingTutorial = false;
 					// subtract a life
 					--player.lives;
 					// if there are no lives, go to game over screen
@@ -244,6 +247,9 @@ public class Main extends GameJava {
 			switch (currentLevel) {
 			case tutorial:
 				Draw.image(Sprites.get("back1"), 500, 200);
+				if(showingTutorial) {
+					Draw.image(Sprites.get("tutorial"), 269, 204, 0, 2);
+				}
 				break;
 			case two:
 				Draw.image(Sprites.get("back2"), 500, 200);
@@ -440,9 +446,6 @@ public class Main extends GameJava {
 		// level 2
 		case two:
 			for (int i = 100; i < 500; i += 20) {
-				if (i == 300) {
-					continue;
-				}
 				EnemySmall.create(i, 25 + i / 1.5, 0, 1.0);
 			}
 
